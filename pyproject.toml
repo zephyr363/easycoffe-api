@@ -1,0 +1,20 @@
+[project]
+name = "handyhands-api"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django (>=5.2.7,<6.0.0)",
+    "django-ninja (>=1.4.3,<2.0.0)",
+    "uvicorn (>=0.37.0,<0.38.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
