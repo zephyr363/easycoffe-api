@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+import os
 
 load_dotenv(find_dotenv())
 
@@ -23,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-i@jjptll71(i0)$iya8@gsrptsjnebn0@5z*js6c4%0rjq$31p"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "ninja_extra",
+    "app.apps.AppConfig",
 ]
 
 MIDDLEWARE = [
@@ -116,3 +119,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "app.User"
+AUTHENTICATION_BACKENDS = ["app.backends.EmailBackend"]
+
+ANYDI = {
+    "PATCH_NINJA": True,
+    "MODULES": [
+        "src.app.modules.AppModule",
+    ],
+}
