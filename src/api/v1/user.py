@@ -1,4 +1,4 @@
-from ninja_extra import api_controller, http_get
+from ninja_extra import api_controller, http_get,http_post
 from ninja_extra.security import django_auth
 from django.http import HttpRequest, HttpResponse
 import anydi
@@ -14,20 +14,24 @@ class UserController:
     @http_get("/", auth=None)
     def list_users(self, request: HttpRequest):
         return self.user_dao.find_all()
-
-    @http_get("/{user_id}/", auth=None)
-    def get_user(self, request: HttpRequest, user_id: int):
-        return self.user_dao.find_one(user_id)
-
-    @http_get("/create/", auth=None)
+    
+    @http_post("/", auth=None)
     def create_user(self, request: HttpRequest, data: LoginSchema):
         return self.user_dao.create(data)
-
-    @http_get("/login/", auth=None)
+    
+    @http_post("/login/", auth=None)
     def login_user(self, request: HttpRequest, data: LoginSchema):
         return self.user_dao.login(request, data)
-
+    
     @http_get("/logout/")
     def logout_user(self, request: HttpRequest):
         self.user_dao.logout(request)
         return HttpResponse(status=204)
+
+    @http_get("/{user_id}/")
+    def get_user(self, request: HttpRequest, user_id: int):
+        return self.user_dao.find_one(user_id)
+    
+    @http_get("/me/")
+    def get_me(self, request: HttpRequest):
+        return self.user_dao.find_one(request.user.id)
