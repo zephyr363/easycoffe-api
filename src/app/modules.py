@@ -1,10 +1,11 @@
-from anydi import provider
-
+from injector import Module, singleton, noscope, Binder
 from dao import *
 
-class AppModule:
-    @provider(scope='singleton')
-    def user_dao(self) -> UserDAO:
-        return UserDAO()
-    
-    
+
+class AppModule(Module):
+    def configure(self, binder: Binder) -> None:
+        binder.bind(CoffeeDAO, to=CoffeeDAO, scope=singleton)
+        binder.bind(UserDAO, to=UserDAO, scope=singleton)
+        binder.bind(ProfileDAO, to=ProfileDAO, scope=singleton)
+        
+        

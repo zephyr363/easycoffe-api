@@ -23,7 +23,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=12, null=False, blank=False)
     birth_date = models.DateField(null=True, blank=True)
     photo = models.ImageField(upload_to="profile_photos/", null=True, blank=True)
-    Location = models.OneToOneField(
+    location = models.OneToOneField(
         Location,
         on_delete=models.SET_NULL,
         null=True,
@@ -33,3 +33,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.email}"
+
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'

@@ -29,8 +29,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -41,13 +39,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "ninja_extra",
     "app.apps.AppConfig",
+    "ninja_extra",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -97,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "UTC"
 
@@ -106,25 +106,17 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "app.User"
-AUTHENTICATION_BACKENDS = ["app.backends.EmailBackend"]
 
-ANYDI = {
-    "PATCH_NINJA": True,
-    "MODULES": [
-        "src.app.modules.AppModule",
-    ],
+AUTHENTICATION_BACKENDS = [
+    "app.backends.EmailBackend",  # ваш кастомный бэкенд
+    "django.contrib.auth.backends.ModelBackend",  # стандартный бэкенд
+]
+NINJA_EXTRA = {
+    "INJECTOR_MODULES": ["app.modules.AppModule"],
+    "PAGINATION_CLASS": "ninja_extra.pagination.PageNumberPaginationExtra",
 }

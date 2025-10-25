@@ -1,11 +1,11 @@
 from django.db import models
-from .user import User
+from .profile import Profile
 from coffee import CoffeeProduct
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, verbose_name="Профиль"
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")

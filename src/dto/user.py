@@ -7,8 +7,15 @@ class LoginSchema(Schema):
     email: str
     password: str
 
+class UserCreateSchema(Schema):
+    first_name: str
+    last_name: str
+    email: str
+    password: str
+    password_confirm: str
+    
 
-class UserListSchema(ModelSchema):
+class UserSchema(ModelSchema):
     class Config:
         model = importString("app.models.User")
         model_fields = "__all__"
@@ -22,28 +29,16 @@ class LocationSchema(ModelSchema):
         exclude = ["lprofile"]
 
 
-class ProfileListSchema(ModelSchema):
-    user: UserListSchema
-
-    class Config:
-        model = importString("app.models.Profile")
-        model_fields = "__all__"
-
-
-class UserDetailSchema(UserListSchema):
-    profile: Optional[ProfileListSchema] = None
-
-class ProfileDetailSchema(ModelSchema):
-    user: UserListSchema
+class ProfileSchema(ModelSchema):
+    user: UserSchema
     location: Optional[LocationSchema] = None
 
     class Config:
         model = importString("app.models.Profile")
         model_fields = "__all__"
-        
+
 
 class CreateProfileSchema(Schema):
-    user_id: int
     phone_number: str
     photo: Optional[str] = None
     full_name: Optional[str] = None

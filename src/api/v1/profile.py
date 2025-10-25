@@ -1,25 +1,27 @@
-from ninja_extra import api_controller, http_get
-import anydi
+from ninja_extra import api_controller, route
+from injector import inject
 from dao import ProfileDAO
+from dto.user import CreateProfileSchema
 
 
 @api_controller("/v1/profiles", tags=["Profiles"])
 class ProfileController:
-    def __init__(self, profile_dao: ProfileDAO = anydi.auto):
+    @inject
+    def __init__(self, profile_dao: ProfileDAO):
         self.profile_dao = profile_dao
 
-    @http_get("/")
+    @route.get("/")
     def list_profiles(self, request):
         return self.profile_dao.find_all()
 
-    @http_get("/{profile_id}/")
+    @route.get("/{profile_id}/")
     def get_profile(self, request, profile_id: int):
         return self.profile_dao.find_one(profile_id)
 
-    @http_get("/create/")
-    def create_profile(self, request):
-        return self.profile_dao.create()
+    @route.post("/create/")
+    def create_profile(self, request, data: CreateProfileSchema):
+        return self.profile_dao.create(data)
 
-    @http_get("/update/{profile_id}/")
+    @route.patch("/update/{profile_id}/")
     def update_profile(self, request, profile_id: int):
         return {"message": f"Profile {profile_id} updated"}
