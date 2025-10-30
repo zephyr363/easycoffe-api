@@ -15,14 +15,11 @@ class CoffeeProduct(models.Model):
         ("medium", "Средняя"),
         ("dark", "Тёмная"),
     ]
-
     name = models.CharField(max_length=200, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
     category = models.ForeignKey(
         "CoffeeCategory", on_delete=models.CASCADE, verbose_name="Категория"
     )
-
-    # Бренд и производитель
     brand = models.ForeignKey("Brand", on_delete=models.CASCADE, verbose_name="Бренд")
     roast_level = models.CharField(
         max_length=10, choices=ROAST_LEVEL_CHOICES, verbose_name="Обжарка"
@@ -33,8 +30,6 @@ class CoffeeProduct(models.Model):
     net_weight = models.DecimalField(
         max_digits=6, decimal_places=2, verbose_name="Вес нетто (г)"
     )
-
-    # Цена и наличие
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Цена")
     stock_quantity = models.IntegerField(
         default=0,
@@ -42,8 +37,6 @@ class CoffeeProduct(models.Model):
         verbose_name="Количество на складе",
     )
     is_available = models.BooleanField(default=True, verbose_name="Доступен")
-
-    # Даты
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
@@ -120,7 +113,7 @@ class Review(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"Отзыв от {self.user} на {self.product}"
+        return f"Отзыв от {self.author.user.email} на {self.product}"
 
 
 class CoffeeProductImage(models.Model):

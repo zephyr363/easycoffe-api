@@ -1,6 +1,6 @@
 from django.db import models
 from .profile import Profile
-from coffee import CoffeeProduct
+from .coffee import CoffeeProduct
 
 
 class Cart(models.Model):
@@ -16,10 +16,6 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"Корзина {self.user}"
-
-    def get_total_price(self):
-        return sum(item.get_total_price() for item in self.items.all())
-
 
 class CartItem(models.Model):
     cart = models.ForeignKey(
@@ -37,6 +33,3 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
-
-    def get_total_price(self):
-        return self.quantity * self.product.price

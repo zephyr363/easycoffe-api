@@ -7,5 +7,4 @@ class AppModule(Module):
         binder.bind(CoffeeDAO, to=CoffeeDAO, scope=singleton)
         binder.bind(UserDAO, to=UserDAO, scope=singleton)
         binder.bind(ProfileDAO, to=ProfileDAO, scope=singleton)
-        
-        
+        binder.bind(CoffeeCategoryDAO, to=CoffeeCategoryDAO, scope=singleton)

@@ -31,3 +31,7 @@ class CoffeeBrandAdminModel(admin.ModelAdmin):
 @admin.register(CoffeeProductImage)
 class CoffeeImageAdminModel(admin.ModelAdmin):
     pass
+
+@admin.register(Review)
+class CoffeeReviewAdminModel(admin.ModelAdmin):
+    pass

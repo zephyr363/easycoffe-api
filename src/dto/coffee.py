@@ -48,7 +48,7 @@ class ReviewSchema(ModelSchema):
 class CoffeeCreateSchema(ModelSchema):
     brand_id: int
     category_id: int
-
+    
     class Meta:
         model = CoffeeProduct
         fields = [
